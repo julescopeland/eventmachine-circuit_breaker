@@ -104,7 +104,7 @@ module EventMachine
               :level   => :error,
               :message => "Opening circuit!",
             )
-            @on_open.call if @on_open.present?
+            @on_open.call if @on_open
           end
 
           def half_open!
@@ -148,7 +148,7 @@ module EventMachine
           end
 
           def log(level:, message:)
-            if @log_proc.present?
+            if @log_proc
               @log_proc.call(
                 :level   => level,
                 :client  => client,

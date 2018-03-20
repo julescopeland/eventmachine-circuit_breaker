@@ -22,7 +22,7 @@ module EventMachine
 
         def test_closes_after_configured_failures
           within_eventmachine do |done|
-            strategy = Basic.new(failure_count: 2)
+            strategy = Basic.new(failure_limit: 2)
             multi = EventMachine::MultiRequest.new
 
             callback(multi, done) do
@@ -40,7 +40,7 @@ module EventMachine
 
         def test_recovers_after_configured_time
           within_eventmachine do |done|
-            strategy = Basic.new(failure_count: 1, recovery_time: 0.2)
+            strategy = Basic.new(failure_limit: 1, recovery_time: 0.2)
 
             http_req(:get, "http://example.com/fail", strategy) do |client|
               callback(client, done, flunk: true)
@@ -64,7 +64,7 @@ module EventMachine
 
         def test_allows_single_request_to_test_recovery_fail
           within_eventmachine do |done|
-            strategy = Basic.new(failure_count: 1, recovery_time: 0.1)
+            strategy = Basic.new(failure_limit: 1, recovery_time: 0.1)
 
             http_req(:get, "http://example.com/fail", strategy) do |client|
               callback(client, done, flunk: true)
@@ -89,7 +89,7 @@ module EventMachine
 
         def test_allows_single_request_to_test_recovery_success
           within_eventmachine do |done|
-            strategy = Basic.new(failure_count: 1, recovery_time: 0.1)
+            strategy = Basic.new(failure_limit: 1, recovery_time: 0.1)
 
             http_req(:get, "http://example.com/fail", strategy) do |client|
               callback(client, done, flunk: true)

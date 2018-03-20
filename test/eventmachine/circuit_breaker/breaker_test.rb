@@ -14,7 +14,7 @@ module EventMachine
           @responses = []
         end
 
-        def open?
+        def open?(_client)
           state == :open
         end
 
